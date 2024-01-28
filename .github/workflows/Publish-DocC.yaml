@@ -35,7 +35,7 @@ jobs:
           $(xcrun --find docc) process-archive \
             transform-for-static-hosting /tmp/docbuild/Build/Products/Debug-iphoneos/GradientView.doccarchive \
             --output-path docs \
-            --hosting-base-path ''
+            --hosting-base-path "/GradientView"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:

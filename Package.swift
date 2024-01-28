@@ -20,7 +20,13 @@ let package = Package(
 	targets: [
 		.target(
 			name: "GradientView",
-			path: "."
+			path: ".",
+			exclude: ["Snapshotter"]
+		),
+		.testTarget(
+			name: "Snapshotter",
+			dependencies: ["GradientView"],
+			path: "Snapshotter"
 		),
 	]
 )

@@ -11,6 +11,8 @@ final public class GradientView: UIView {
 	/// The type of gradient.
 	public enum GradientType {
 		/// A linear gradient going from ``startPoint`` to ``endPoint``.
+		///
+		/// ![An example of a linear gradient.](Linear)
 		case axial
 		/// A circular radial gradient with the centre at ``startPoint`` and ``endPoint`` lying
 		/// on the circumference.
@@ -18,11 +20,20 @@ final public class GradientView: UIView {
 		/// 1 gives a regular circular gradient, while setting it to less moves the starting point
 		/// away and adjusts the colour locations to give a less curved gradient if ``startPoint``
 		/// is on the edge of the view.
+		///
+		/// Examples of gradients with `factor` set to 1, 0.75, 0.5 and 0.25:
+		/// ![An example of a radial gradient with factor 1.](RadialFactor1)
+		/// ![An example of a radial gradient with factor 0.75.](RadialFactor0.75)
+		/// ![An example of a radial gradient with factor 0.5.](RadialFactor0.5)
+		/// ![An example of a radial gradient with factor 0.25.](RadialFactor0.25)
 		case radial(factor: CGFloat)
 		/// A conic gradient aroind ``startPoint``, starting at `angle`. ``endPoint`` is ignored.
 		/// ``locations`` values are adjusted to make the gradient evenly circular, but interpolation
 		/// of colours between locations is not. If you want a correct-looking conic gradient in a
 		/// rectangular view, provide a large number of values for ``locations`` and ``colours``.
+		///
+		/// ![An example of a conic gradient.](Conic)
+		///
 		/// - Parameter angle: The starting angle of the gradient.
 		case conic(angle: CGFloat)
 	}
@@ -158,18 +169,18 @@ final public class GradientView: UIView {
     return gradientView
 }
 
-func stripeColours(first: UIColor, second: UIColor, count: Int) -> [UIColor] {
+private func stripeColours(first: UIColor, second: UIColor, count: Int) -> [UIColor] {
 	return [first, first, second, second] * count
 }
 
-func stripeLocations(count: Int) -> [CGFloat] {
+private func stripeLocations(count: Int) -> [CGFloat] {
 	return (0 ..< count * 4).map { n in
 		let a: Int = (n + 1) / 2
 		return CGFloat(a) / CGFloat(count * 2)
 	}
 }
 
-extension Array {
+private extension Array {
 	static func *(lhs: Array<Element>, rhs: Int) -> Array<Element> {
 		var result: [Element] = []
 		for _ in 0 ..< rhs {

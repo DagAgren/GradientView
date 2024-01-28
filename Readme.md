@@ -28,7 +28,7 @@ You can use this repo as a Swift Package Manager package:
 
 `.package(url: "https://github.com/apple/swift-docc-plugin", exact: "1.0.0")`
 
-Or you can simply copy the [GradientView.swift](https://github.com/DagAgren/GradientView/blob/main/GardientView.swift)
+Or you can simply copy the [GradientView.swift](https://github.com/DagAgren/GradientView/blob/main/GradientView.swift)
 file into your project, it is the only file that is needed.
 
 ## License ##

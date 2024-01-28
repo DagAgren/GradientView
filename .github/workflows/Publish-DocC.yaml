@@ -1,0 +1,45 @@
+name: Deploy DocC documentation to Github Pages
+on:
+  push:
+    branches: ["main"]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+  
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: macos-13
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Select Xcode 15.2
+        run: sudo xcode-select -s "/Applications/Xcode_15.2.app"
+      - name: Build DocC
+        run: |
+          xcodebuild docbuild \
+            -scheme GradientView \
+            -derivedDataPath /tmp/docbuild \
+            -sdk iphoneos17.2 \
+            -destination "platform=iOS,name=Any iOS Device"
+      - name: Process doc archive
+        run: |
+          $(xcrun --find docc) process-archive \
+            transform-for-static-hosting /tmp/docbuild/Build/Products/Debug-iphoneos/GradientView.doccarchive \
+            --output-path docs \
+            --hosting-base-path ''
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: 'docs'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1

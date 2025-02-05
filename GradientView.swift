@@ -2,6 +2,7 @@ import UIKit
 
 /// A view that displays a gradient using a CAGradientLayer, but providing a more
 /// convenient API.
+@available(iOS 17.0, *)
 final public class GradientView: UIView {
 	@_documentation(visibility: private)
 	public override class var layerClass: AnyClass { return CAGradientLayer.self }
@@ -90,6 +91,10 @@ final public class GradientView: UIView {
 		let width: CGFloat = frame.width
 		let height: CGFloat = frame.height
 
+		let locations = locations ?? colours?.enumerated().map { index, _ in
+			CGFloat(index) / CGFloat((colours?.count ?? 0) - 1)
+		}
+
 		switch type {
 			case .axial:
 				gradientLayer.type = .axial
@@ -127,6 +132,7 @@ final public class GradientView: UIView {
 	}
 }
 
+@available(iOS 18.0, *)
 #Preview("Axial gradient") {
     let gradientView = GradientView()
     gradientView.colours = [#colorLiteral(red: 0.2394109989, green: 0.7730839539, blue: 1, alpha: 1), #colorLiteral(red: 0.607675281, green: 0.8927237161, blue: 1, alpha: 1), #colorLiteral(red: 1, green: 0.7196065661, blue: 0.6126143348, alpha: 1)]
@@ -136,6 +142,7 @@ final public class GradientView: UIView {
     return gradientView
 }
 
+@available(iOS 18.0, *)
 #Preview("Radial gradient") {
     let gradientView = GradientView()
     gradientView.colours = [#colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1), #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1), #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)]
@@ -146,6 +153,7 @@ final public class GradientView: UIView {
     return gradientView
 }
 
+@available(iOS 18.0, *)
 #Preview("Radial gradient with factor") {
     let gradientView = GradientView()
     let a = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -158,6 +166,7 @@ final public class GradientView: UIView {
     return gradientView
 }
 
+@available(iOS 18.0, *)
 #Preview("Conic gradient") {
     let gradientView = GradientView()
     let a = #colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1)
